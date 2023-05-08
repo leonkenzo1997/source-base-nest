@@ -1,0 +1,45 @@
+version: "3.2"
+services:
+  chocolat-mariadb:
+    container_name: chocolat-mariadb
+    image: mariadb:10.7
+    tty: true
+    stdin_open: true
+    environment:
+      - MARIADB_DATABASE=chocolat_dev
+      - MARIADB_ROOT_PASSWORD=Root@1234
+    ports:
+      - '${DB_PORT}:3306'
+    volumes:
+      - ./db/data-test:/var/lib/mysql
+    restart: always
+    networks:
+      - chocolat-backend-network
+  chocolat-backend:
+    container_name: chocolat-backend
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: bash -c "npm run start:dev"
+    networks:
+      - chocolat-backend-network
+    links:
+      - chocolat-mariadb
+      - chocolat-redis
+    ports:
+      - '${PORT}:3000'
+  chocolat-redis:
+    container_name: chocolat-redis
+    restart: on-failure
+    image: redis:6.0.8
+    ports:
+      - '${REDIS_PORT}:6379'
+    hostname: chocolat-redis
+networks:
+  default:
+  chocolat-backend-network:
+    driver: bridge

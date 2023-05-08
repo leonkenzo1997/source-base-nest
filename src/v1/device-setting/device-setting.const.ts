@@ -1,0 +1,18 @@
+export enum INDICATOR_LIGHT_MODE {
+  NOT_WORKING_MODE = 0,
+  ROTATION_MODE = 1,
+  BRIGHTNESS_FIXED_MODE = 2,
+  SENSOR_MODE = 3,
+}
+
+export enum SENSITIVITY_OPTION {
+  HIGH = 3,
+  MEDIUM = 4,
+  LOW = 5,
+}
+
+export enum DIMMING_MODE {
+  UNDER = 0,
+  MIDDLE = 1,
+  AWARD = 2,
+}

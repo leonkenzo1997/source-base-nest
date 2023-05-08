@@ -1,0 +1,5 @@
+B1: connect into server via file .pem
+B2: move to folder contain code
+B3: pull new code => git pull origin dev or pro
+B4: run file docker compose => docker-compose down and docker-compose up. if success, docker-compose down then docker-compose up -d
+B5: when success, we test api and check server running
