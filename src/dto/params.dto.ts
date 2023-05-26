@@ -11,12 +11,12 @@ import {
 import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class AttachIdDto {
-  @IsNumber(
-    {},
-    {
-      message: i18nValidationMessage('validations.INVALID_NUMBER'),
-    },
-  )
+  // @IsNumber(
+  //   {},
+  //   {
+  //     message: i18nValidationMessage('validations.INVALID_NUMBER'),
+  //   },
+  // )
   @IsNotEmpty({ message: i18nValidationMessage('validations.NOT_EMPTY') })
   id: number;
 }

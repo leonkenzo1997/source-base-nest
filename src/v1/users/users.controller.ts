@@ -23,7 +23,6 @@ import { AuthRules } from '../rules/decorator/rules.decorator';
 import { UserRule } from '../rules/rule.const';
 import { CreateSuperAdminDto } from './dto/create-super-admin.dto';
 import { DeleteMultipleAccountDto } from './dto/delete-multiple-account.dto';
-import { GetListUserByBuildingIdDto } from './dto/get-list-user-by-buidling.dto';
 import { ParamUserDetailDto } from './dto/param-user.dto';
 import { UpdateProfileAccountDto } from './dto/update-profile-account.dto';
 import { UserRole } from './user.const';
@@ -51,20 +50,15 @@ export class UsersController {
     return this.res.success(data, 'SUCCESS');
   }
 
-  /**
-   * This API register account admin
-   *
-   * @body createAdminDto CreateUserDto
-   * @returns ISuccessResponse | IErrorResponse
-   */
+  // api register account admin
   @AuthRoles(UserRole.SuperAdmin)
-  @AuthRules(UserRule.UserManagement)
-  @Post('register/account')
-  async createAccount(
-    @Body() createAdminDto: CreateUserDto,
+  // @AuthRules(UserRule.UserManagement)
+  @Post('register/admin')
+  async createAdmin(
+    @Body() createAdminDto: CreateSuperAdminDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
-    const data = await this.usersService.createAccount(createAdminDto);
-    return this.res.success(data, 'SUCCESS');
+    const data = await this.usersService.createAdmin(createAdminDto);
+    return this.res.success(data);
   }
 
   /**
@@ -74,7 +68,7 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin)
-  @AuthRules(UserRule.UserManagement)
+  // @AuthRules(UserRule.UserManagement)
   @Post('check-email')
   async checkEmailExist(
     @Body('email') email: string,
@@ -84,56 +78,17 @@ export class UsersController {
   }
 
   /**
-   * This API for get list user account by building
-   *
-   * @query getListUserByBuildingIdDto getListUserByBuildingIdDto
-   * @returns ISuccessResponse | IErrorResponse
-   */
-  @AuthRoles(UserRole.Admin, UserRole.SuperAdmin)
-  @AuthRules(UserRule.UserManagement)
-  @Get('get-list-account-by-building-id/user')
-  public async getListUsersByBuildingId(
-    @Query() getListUserByBuildingIdDto: GetListUserByBuildingIdDto,
-  ): Promise<ISuccessResponse | IErrorResponse> {
-    const data = await this.usersService.getListUsersByBuildingId(
-      getListUserByBuildingIdDto,
-    );
-    return this.res.success(data, 'SUCCESS');
-  }
-
-  /**
-   * This API for get list admin account by building
-   *
-   * @request req IRequest
-   * @query getListUserByBuildingIdDto getListUserByBuildingIdDto
-   * @returns ISuccessResponse | IErrorResponse
-   */
-  @AuthRoles(UserRole.Admin, UserRole.SuperAdmin)
-  @AuthRules(UserRule.UserManagement)
-  @Get('get-list-account-by-building-id/admin')
-  public async getListAdminsByBuildingId(
-    @Request() req: IRequest,
-    @Query() getListUserByBuildingIdDto: GetListUserByBuildingIdDto,
-  ): Promise<ISuccessResponse | IErrorResponse> {
-    const user = req.user;
-    const data = await this.usersService.getListAdminsByBuildingId(
-      user,
-      getListUserByBuildingIdDto,
-    );
-    return this.res.success(data, 'SUCCESS');
-  }
-
-  /**
    * This API get detail user
    *
    * @param params ParamUserDetailDto
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
-  @AuthRules(UserRule.UserManagement)
+  // @AuthRules(UserRule.UserManagement)
   @Get(':id')
   async getDetailUsers(
     @Param() params: ParamUserDetailDto,
+    // @Param('id') id: number
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = params.id;
     let data = await this.usersService.getDetailUsers(id);
@@ -198,20 +153,6 @@ export class UsersController {
     return this.res.success(data, 'CHANGE_PASSWORD_SUCCESS');
   }
 
-  // api update account
-  // @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
-  // @Put('/:id')
-  // async updateAccount(
-  //   @Param('id') id: number,
-  //   @Body() updateProfileAccountDto: UpdateProfileAccountDto,
-  // ): Promise<ISuccessResponse | IErrorResponse> {
-  //   let data = await this.usersService.updateAccount(
-  //     id,
-  //     updateProfileAccountDto,
-  //   );
-  //   return this.res.success(data, 'SUCCESS');
-  // }
-
   /**
    * This API update profile account
    *
@@ -220,7 +161,6 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
-  @AuthRules(UserRule.UserManagement)
   @Put()
   async updateProfileAccount(
     @Request() req: IRequest,
@@ -242,7 +182,7 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
-  @AuthRules(UserRule.UserManagement)
+  // @AuthRules(UserRule.UserManagement)
   @Put('delete-multiple-account')
   async deleteMultipleAccount(
     @Body() deleteMultipleAccountDto: DeleteMultipleAccountDto,
@@ -260,7 +200,6 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
-  @AuthRules(UserRule.UserManagement)
   @Delete('/:id')
   async deleteAccount(
     @Param() params: ParamUserDetailDto,
@@ -277,7 +216,7 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
-  @AuthRules(UserRule.UserManagement)
+  // @AuthRules(UserRule.UserManagement)
   @Put('/:id')
   async recoverAccount(
     @Param() params: ParamUserDetailDto,

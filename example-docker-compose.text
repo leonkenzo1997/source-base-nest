@@ -1,0 +1,87 @@
+version: '3.2'
+services:
+  beautygo-db:
+    #on macos need parameter platform
+    #on other os, we need commend this line
+    # platform: linux/amd64
+    container_name: ${PROJECT_NAME}-db
+    image: mysql:8.0.33
+    ports:
+      - ${MYSQL_PORT}:${DATABASE_PORT}
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${DATABASE_DATABASE}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - .env
+    volumes:
+      - beautygo-db:/var/lib/mysql
+    networks:
+      - beautygo-network
+  beautygo-backend-node-module:
+    image: node:18
+    command: yarn install
+    working_dir: /app
+    volumes:
+      - $PWD:/app
+    networks:
+      - beautygo-network
+  beautygo-backend-dev:
+    container_name: ${PROJECT_NAME}-backend-dev
+    restart: always
+    tty: true
+    stdin_open: true
+    depends_on:
+      - beautygo-backend-node-module
+    build:
+      context: $PWD
+      dockerfile: $PWD/docker/App.Dockerfile
+      target: development
+    env_file:
+      - .env
+    volumes:
+      - $PWD:/app
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+    networks:
+      - beautygo-network
+  beautygo-redis:
+    container_name: '${PROJECT_NAME}-redis'
+    restart: on-failure
+    image: redis:6.0.8
+    env_file:
+      - .env
+    ports:
+      - '${REDIS_PORT}:6379'
+    networks:
+      - beautygo-network
+  # beautygo-nginx:
+  #   build:
+  #     context: $PWD/docker/nginx/
+  #     args:
+  #         BUILD_NGINX_DOMAIN: $BUILD_NGINX_DOMAIN
+  #         PROJECT_NAME: $PROJECT_NAME
+  #         PORT: $PORT
+  #   container_name: '${PROJECT_NAME}-nginx'
+  #   depends_on:
+  #     - ${PROJECT_NAME}-backend-dev
+  #   # volumes:
+  #   #   - beautygo-nginx:/etc/nginx/conf.d
+  #   #   - beautygo-letsencrypt:/etc/letsencrypt
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - ${WEB_PORT}:80
+  #     - 443:443
+  #   restart: always
+  #   networks:
+  #     - beautygo-network
+networks:
+  beautygo-network:
+volumes:
+  beautygo-db:
+  #beautygo-nginx:

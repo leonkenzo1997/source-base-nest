@@ -6,6 +6,7 @@
     "MAX_PASSWORD": "비밀번호는 50자 이하여야 합니다",
     "PASSWORD_WEAK": "비밀번호가 너무 약함",
     "INVALID_STRING": "이 필드는 문자열이 아닙니다",
+    "INVALID_DATE": "이 필드는 datetime 형식이 아닙니다.",
     "INVALID_DATA": "이 데이터는 유효하지 않습니다",
     "PHONE_NUMBER_MIN": "전화번호는 10자 이상이어야 합니다!!!",
     "PHONE_NUMBER_MAX": "전화번호는 12자 이하여야 합니다.!!!",
@@ -14,10 +15,10 @@
     "INVALID_NUMBER": "이 필드는 숫자가 아닙니다",
     "INVALID_VERSION": "이 필드는 유효하지 않습니다",
     "INVALID_ARRAY": "이 필드는 배열입니다",
-    "MIX_ARRAY": "배열에는 하나 이상의 값이 있어야 합니다.",
+    "MAX_ARRAY": "배열에는 하나 이상의 값이 있어야 합니다.",
     "INVALID_FILE_NAME": "파일 이름은 3자에서 63자 사이여야 하거나 유효하지 않은 문자여야 합니다.",
-    "MIX_LENGTH_320": "이 필드는 320자 이하여야 합니다.",
-    "MIX_LENGTH_255": "이 필드는 255자 이하여야 합니다.",
+    "MAX_LENGTH_320": "이 필드는 320자 이하여야 합니다.",
+    "MAX_LENGTH_255": "이 필드는 255자 이하여야 합니다.",
     "MIN_BRIGHTNESS": "0보다 크거나 같은 밝기 값",
     "MAX_BRIGHTNESS": "100 이하의 밝기 값",
     "MIN_TONE": "2700 이상의 톤 값0",
@@ -55,5 +56,7 @@
     "MAX_LUX_SETTING": "2000 이하의 센서 값의 럭스 설정",
     "MIN_DIMMING_SETTING": "0보다 크거나 같은 센서 값의 디밍 설정",
     "MAX_DIMMING_SETTING": "2 이하의 센서 값의 디밍 설정",
-    "ONE_MASTER_SMART_SENSOR_REGISTER_IN_GROUP": "그룹을 위한 하나의 마스터 스마트 센서"
+    "ONE_MASTER_SMART_SENSOR_REGISTER_IN_GROUP": "그룹을 위한 하나의 마스터 스마트 센서",
+    "SMART_SENSOR_NOT_SINGLE": "옵션 싱글에 없는 스마트 센서",
+    "INVALID_LIGHTING_STATUS": "조명 상태는 enum 값 'off' 또는 'on'입니다."
 }

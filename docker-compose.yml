@@ -7,31 +7,31 @@ services:
     stdin_open: true
     environment:
       - MARIADB_DATABASE=chocolat_dev
-      - MARIADB_USER=chocolat
-      - MARIADB_PASSWORD=chocolat@1234
       - MARIADB_ROOT_PASSWORD=Root@1234
     ports:
-      - '${DB_PORT}:3306'
+      - 3106:3306
     volumes:
       - ./db/data:/var/lib/mysql
     restart: always
-    hostname: chocolat-mariadb
     networks:
-      - chocolat-network      
+      - chocolat-backend-network
   chocolat-backend:
     container_name: chocolat-backend
     restart: on-failure
     build:
       context: .
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-    command: bash -c "yarn run start:dev"
+    command: bash -c "npm run start:dev"
     networks:
-      - chocolat-network
+      - chocolat-backend-network
+    links:
+      - chocolat-mariadb
+      - chocolat-redis
     ports:
-      - '${PORT}:3000'
+      - 3100:3000
   chocolat-redis:
     container_name: chocolat-redis
     restart: on-failure
@@ -39,22 +39,6 @@ services:
     ports:
       - '${REDIS_PORT}:6379'
     hostname: chocolat-redis
-    networks:
-      - chocolat-network
-  nginx:
-    build: ./nginx/
-    container_name: chocolat-nginx
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - $PWD/letsencrypt:/etc/letsencrypt
-    ports:
-      - 80:80
-      - 443:443
-    environment:
-      - NGINX_HOST=chocolat-api.eastus.cloudapp.azure.com
-      - NGINX_PORT=80
-    networks:
-      - chocolat-network
 networks:
-  chocolat-network:
+  chocolat-backend-network:
     driver: bridge

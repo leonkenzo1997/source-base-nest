@@ -21,20 +21,9 @@ export enum UserGender {
 export const USER_SELECT = {
   role: { id: true, name: true },
   rules: { rule: { id: true, name: true }, id: true },
-  usersBuildings: {
-    building: { id: true, address: true, name: true, status: true },
-    id: true,
-  },
-  usersBuildingsFloors: {
-    building: { id: true, address: true, name: true, status: true },
-    id: true,
-    floor: { id: true, name: true },
-  },
 };
 
 export let USER_RELATION = {
   rules: { rule: true },
   role: true,
-  usersBuildings: { building: true },
-  usersBuildingsFloors: { building: true, floor: true },
 };

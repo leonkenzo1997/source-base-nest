@@ -4,7 +4,6 @@ import {
 
 export class AppBaseEntity extends BaseEntity {
 
-
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   public created_at: Date;
 

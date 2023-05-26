@@ -1,10 +1,9 @@
-import { ResponseService } from '../../utils/response.service';
+import { ResponseService } from 'src/utils/response.service';
 import { Controller, Get, UseGuards, Request } from '@nestjs/common';
-import { IRequest } from '../../interfaces/request.interface';
 import { JwtAuthGuard } from '../authentication/guard/jwt-authentication.guard';
 // import { UsersService } from '../users/users.service';
 import { TestService } from './test.service';
-import { RulesService } from '../rules/rules.service';
+import { IRequest } from '../../interfaces/request.interface';
 
 
 @Controller()
@@ -12,7 +11,6 @@ export class TestController {
   constructor(
     // private readonly usersService: UsersService,
     private readonly testService: TestService,
-    private readonly rulesService: RulesService,
     private res: ResponseService,
   ) {}
 
@@ -20,7 +18,7 @@ export class TestController {
   @Get('')
   async test(@Request() req: IRequest) {
     let user = req.user;
-    const data = await this.testService.testSchedule();
+    const data = await this.testService.test(user?.sessionId);
     return this.res.success(data);
   }
 }

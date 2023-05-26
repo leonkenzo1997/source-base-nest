@@ -1,13 +1,14 @@
-FROM node:14.18.2
+FROM node:14.18.2 AS development
   
 WORKDIR /usr/src/app
 
 COPY package.json ./
 
-RUN npm i -g @nestjs/cli@9.0.0 && npm install --no-cache
+RUN npm i -g @nestjs/cli@9.0.0 && npm install --force && npm install typeorm@0.3.7
 
 #COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]      
+# CMD ["npm", "run", "start:dev --debug 127.0.0.1:3100"]      
+CMD npm run start:dev --debug 127.0.0.1:9229

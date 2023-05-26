@@ -3,15 +3,13 @@ import {
   HttpException,
   HttpStatus,
   Inject,
-  Injectable
+  Injectable,
 } from '@nestjs/common';
 import { Like } from 'typeorm';
 import { IPagination } from '../../interfaces/pagination.interface';
 import { PaginationService } from '../../utils/pagination.service';
 import { RoleName } from '../roles/roles.const';
-import { UpdateUsersRulesDto } from '../users-rules/dto/update-users-rules.dto';
 import { UsersRulesService } from '../users-rules/users-rules.service';
-import { IUser } from '../users/interfaces/user.interface';
 import { UsersService } from '../users/users.service';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { GetRuleDto } from './dto/get-rule.dto';
@@ -19,6 +17,8 @@ import { UpdateRuleDto } from './dto/update-rule.dto';
 import { Rule } from './entities/rule.entity';
 import { RuleRepository } from './repositories/rule.repository';
 import { UserRule } from './rule.const';
+import { IUser } from '../users/interfaces/user.interface';
+import { UpdateUsersRulesDto } from '../users-rules/dto/update-users-rules.dto';
 
 @Injectable()
 export class RulesService {

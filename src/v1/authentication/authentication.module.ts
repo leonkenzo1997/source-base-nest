@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SessionsModule } from '../sessions/sessions.module';
 import { UsersModule } from '../users/users.module';
 import { AuthenticationController } from './authentication.controller';
@@ -8,7 +8,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   controllers: [AuthenticationController],
-  imports: [UsersModule, SessionsModule],
+  imports: [forwardRef(() => UsersModule), SessionsModule],
   providers: [AuthenticationService, JwtStrategy, JwtRefreshStrategy],
   exports: [AuthenticationService],
 })

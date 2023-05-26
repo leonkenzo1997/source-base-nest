@@ -1,17 +1,13 @@
-FROM --platform=linux/amd64 chocolat.azurecr.io/chocolate:dev
-#FROM --platform=linux/amd64 node:14.18.2
-
+FROM node:14.18.2
+  
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package.json ./
 
-RUN sed -i -e 's|^REDIS_HOST\=.*$|REDIS_HOST\=20.41.104.108|' .env \
-    && sed -i -e 's|^DB_HOST=.*$|DB_HOST\=20.214.100.20|' .env \
-    && rm -rf dist/ \
-    && npm i -g @nestjs/cli@9.0.0 \
-    && yarn install\
-    && nest build
+RUN npm i -g @nestjs/cli@9.0.0 && npm install --force && npm install typeorm@0.3.7
+
+#COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "dist/src/main.js"]
+CMD ["npm", "run", "start:dev"]      

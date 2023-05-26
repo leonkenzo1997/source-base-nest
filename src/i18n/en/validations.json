@@ -6,6 +6,7 @@
     "MAX_PASSWORD": "password must be shorter than or equal to 50 characters",
     "PASSWORD_WEAK": "password too weak",
     "INVALID_STRING": "this field is not a string",
+    "INVALID_DATE": "this field is not a format datetime",
     "INVALID_DATA": " this data is invalid",
     "PHONE_NUMBER_MIN": "Phone number must be longer than or equal to 10 characters!!!",
     "PHONE_NUMBER_MAX": "Phone number must be shorter than or equal to 12 characters!!!",
@@ -56,5 +57,6 @@
     "MIN_DIMMING_SETTING": "The dimming setting of sensor value greater than or equal to 0",
     "MAX_DIMMING_SETTING": "The dimming setting of sensor value less than or equal to 2",
     "ONE_MASTER_SMART_SENSOR_REGISTER_IN_GROUP": "One master smart sensor for a group",
-    "SMART_SENSOR_NOT_SINGLE": "옵션 싱글에 없는 스마트 센서"
+    "SMART_SENSOR_NOT_SINGLE": "Smart sensor not in option single",
+    "INVALID_LIGHTING_STATUS": "The lighting status is enum value 'off' or 'on'"
 }

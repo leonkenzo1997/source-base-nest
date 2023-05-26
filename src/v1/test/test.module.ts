@@ -1,24 +1,16 @@
-import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { CronService } from '../../cron/cron.service';
-import { CrontabModule } from '../crontab/crontab.module';
-import { RulesModule } from '../rules/rules.module';
 import { SessionsModule } from '../sessions/sessions.module';
+import { SessionsService } from '../sessions/sessions.service';
 import { UsersModule } from '../users/users.module';
+import { UsersService } from '../users/users.service';
 import { TestController } from './test.controller';
 import { TestService } from './test.service';
 // import { RolesModule } from './../roles/roles.module';
 
 @Module({
-  imports: [
-    UsersModule,
-    SessionsModule,
-    RulesModule,
-    CrontabModule,
-    HttpModule,
-  ],
+  imports: [UsersModule, SessionsModule],
   controllers: [TestController],
-  providers: [TestService, CronService],
+  providers: [TestService],
   exports: [TestService],
 })
 export class TestModule {}

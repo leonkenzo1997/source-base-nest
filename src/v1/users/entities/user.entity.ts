@@ -1,7 +1,7 @@
-import { FloorEntity } from '../../floors/entities/floor.entity';
 import { UserRule } from '../../users-rules/entities/user-rule.entity';
-import { Scene } from './../../scene/entities/scene.entity';
 /* eslint-disable prettier/prettier */
+import { Exclude, instanceToPlain } from 'class-transformer';
+import { Max, Min } from 'class-validator';
 import {
   BaseEntity,
   Column,
@@ -10,24 +10,15 @@ import {
   Entity,
   Index,
   JoinColumn,
+  JoinTable,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 import { Session } from '../../sessions/entities/session.entity';
-
-import { Exclude, instanceToPlain } from 'class-transformer';
-import { Max, Min } from 'class-validator';
-
-import { Building } from '../../buildings/entities/building.entity';
-
-import { ErrorLog } from '../../error-log/entities/error-log.entity';
-import { UserBuildingFloor } from '../../users-buildings-floors/entities/user-building-floor.entity';
-import { UserBuilding } from '../../users-buildings/entities/user-building.entity';
 import { UserGender, UserStatus } from '../user.const';
-import { Schedule } from "../../schedule/entities/schedule.entity";
 
 @Entity({ name: 'users' })
 // @Unique(['email', 'phoneNumber'])
@@ -87,41 +78,7 @@ export class User extends BaseEntity {
   @JoinColumn({ name: 'roleId' })
   role: Role;
 
-  // assign user id for building table
-  @OneToMany((type) => FloorEntity, (floor) => floor.createdBy)
-  floors: FloorEntity[];
-
-  // assign user id for building table
-  @OneToMany((type) => Building, (building) => building.createdBy)
-  buildings: Building[];
-
-  // assign user id for schedule table
-  @OneToMany((type) => Schedule, (schedule) => schedule.createdBy)
-  schedules: Schedule[];
-
-  // assign build id for users-buildings table
-  @OneToMany((type) => UserBuilding, (userBuilding) => userBuilding.user, {
-    nullable: false,
-    cascade: ['insert', 'soft-remove', 'update', 'recover'],
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  usersBuildings: UserBuilding[];
-
-  // asssign build id for users-buildings table
-  @OneToMany(
-    (type) => UserBuildingFloor,
-    (userBuildingFloor) => userBuildingFloor.user,
-    {
-      nullable: false,
-      cascade: ['insert', 'soft-remove', 'update', 'recover'],
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    },
-  )
-  usersBuildingsFloors: UserBuildingFloor[];
-
-  // using many to many method
+  // //using many to many method
   // @ManyToMany(() => Rule, (rule) => rule.users, {
   //   cascade: ['insert', 'soft-remove', 'update', 'recover'],
   //   onDelete: 'CASCADE',
@@ -138,14 +95,6 @@ export class User extends BaseEntity {
   })
   rules: UserRule[];
 
-  @OneToMany((type) => ErrorLog, (errorLog) => errorLog.user, {
-    cascade: ['soft-remove'],
-    nullable: false,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  errors: ErrorLog[];
-
   @Column({ default: false })
   isSaved: boolean;
 
@@ -161,8 +110,4 @@ export class User extends BaseEntity {
 
     return result;
   }
-
-  // assign user id for scene table
-  @OneToMany((type) => Scene, (scene) => scene.createdBy)
-  scenes: Scene[];
 }

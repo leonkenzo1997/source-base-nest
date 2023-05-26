@@ -1,18 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CronService } from '../../cron/cron.service';
-import { CrontabService } from '../crontab/crontab.service';
+import { SessionsService } from './../sessions/sessions.service';
+import { Session } from '../sessions/entities/session.entity';
+
 
 @Injectable()
 export class TestService {
-  constructor(
-    private crontabService: CrontabService,
-    private cronService: CronService,
-  ) {}
+  constructor(private readonly sessionsService: SessionsService) {}
 
-  async testSchedule() {
-    let name = 'test-cron';
-    let time = 5;
-    await this.crontabService.addCronJob(name, time);
-    // await this.cronService.addCronJob(name, time);
+  async test(id: number): Promise<Session> {
+    const result = await this.sessionsService.findActiveSessionById(id);
+    return result;
   }
 }

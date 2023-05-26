@@ -108,11 +108,13 @@
   "DEVICE_NOT_SMART_SENSOR": "이 장치는 일종의 스마트 센서가 아닙니다. 스마트 센서 기기를 선택해 주세요",
   "DEVICE_IS_LIGHT_BULB": "장치는 전구입니다. 다른 장치를 선택하십시오",
   "MASTER_SMART_SENSOR_REGISTER_IN_GROUP": "마스터 스마트 센서가 이 그룹에 등록되어 있습니다",
-  "DEVICE_NAME_EXIST": "존재하는 이름입니다. 다른 이름으로 변경해주세요.",
+  "DEVICE_ADDRESS_EXIST": "존재하는 이름입니다. 다른 이름으로 변경해주세요.",
   "DEVICE_MUST_LIGHT_BULB_OR_SMART_SENSOR": "장치는 일종의 전구 또는 스마트 센서여야 합니다.",
   "DEVICE_MUST_SMART_SWITCH": "장치는 스마트 스위치 유형이어야 합니다",
   "DEVICE_MUST_GATEWAY": "장치는 일종의 게이트웨이여야 합니다",
   "ZONE_NOT_CONTROL_GATEWAY": "이 영역은 게이트웨이에 의해 제어되지 않습니다",
   "DEVICE_NOT_EXIST_IN_FLOOR": "게이트웨이 장치가 플로어에 존재하지 않습니다.",
-  "FLOOR_NOT_MATCH_FLOOR_OF_DEVICE": "층 ID가 장치의 층과 일치하지 않습니다.!!!"
+  "FLOOR_NOT_MATCH_FLOOR_OF_DEVICE": "층 ID가 장치의 층과 일치하지 않습니다.!!!",
+  "WRONG_AUTHENTICATION": "인증 정보가 일치하지 않습니다.",
+  "TIME_OUT": "요청 시간 초과"
 }

@@ -110,11 +110,13 @@
   "DEVICE_MUST_LIGHT_BULB": "The device must be a type of light bulb",
   "MASTER_SMART_SENSOR_REGISTER_IN_GROUP": "Master smart sensor is registered in this group",
   "SMART_SENSOR_NOT_SINGLE": "Smart sensor not at option single",
-  "DEVICE_NAME_EXIST": "Device name is exist!!!Please enter name again",
+  "DEVICE_ADDRESS_EXIST": "장치 주소가 존재합니다",
   "DEVICE_MUST_LIGHT_BULB_OR_SMART_SENSOR": "The device must be a type of light bulb or smart sensor",
   "DEVICE_MUST_SMART_SWITCH": "The device must be a type of smart switch",
   "DEVICE_MUST_GATEWAY": "The device must be a type of gateway",
   "ZONE_NOT_CONTROL_GATEWAY": "The zone is not controlled by gateway",
   "DEVICE_NOT_EXIST_IN_FLOOR": "The gateway device does not exist on the floor",
-  "FLOOR_NOT_MATCH_FLOOR_OF_DEVICE": "The floor id does not match the floor of the device!!!"
+  "FLOOR_NOT_MATCH_FLOOR_OF_DEVICE": "The floor id does not match the floor of the device!!!",
+  "WRONG_AUTHENTICATION": "Authentication information does not match.",
+  "TIME_OUT": "Request time out"
 }

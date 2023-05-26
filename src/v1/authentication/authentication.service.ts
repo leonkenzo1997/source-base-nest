@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable, forwardRef } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { ErrorSuccess } from '../../interfaces/error-succes.interface';
 import { IToken } from '../../interfaces/generate-token.interface';
@@ -16,6 +16,7 @@ import { Login } from './interfaces/login.interface';
 export class AuthenticationService {
   constructor(
     private passwordService: PasswordService,
+    @Inject(forwardRef(() => UsersService))
     private usersService: UsersService,
     private sessionsService: SessionsService,
     private tokenService: TokenService,
@@ -136,7 +137,7 @@ export class AuthenticationService {
    * @param loginDto LoginDto
    * @returns login | ErrorSuccess
    */
-  async adminLogin(loginDto: LoginDto): Promise<Login | ErrorSuccess> {
+  async adminLogin(loginDto: LoginDto): Promise<Login> {
     let msgError: string;
     // hanlde isSaved for password and email
     const isSaved: boolean = loginDto?.isSaved ? loginDto.isSaved : false;

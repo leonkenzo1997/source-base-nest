@@ -5,6 +5,4 @@ export enum UserRule {
   ErrorLogInquiry = 4,
   OTAManagement = 5,
   Provisioning = 6,
-  SceneInquiry = 7,
-  ScheduleInquiry = 8,
 }

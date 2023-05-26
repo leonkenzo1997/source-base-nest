@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { IToken } from '../interfaces/generate-token.interface';
 import { UserRole } from '../v1/users/user.const';
+import { IToken } from './../interfaces/generate-token.interface';
 
 @Injectable()
 export class TokenService {

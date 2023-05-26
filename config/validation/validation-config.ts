@@ -49,4 +49,7 @@ export const configValidationSchema = Joi.object({
   // WEB_HOST: Joi.string().minWEB_URL: Joi.string().min(1).required(),
 
   //Hash password
+
+  // encryption key
+  SECRET_ENCRYPT_KEY: Joi.string().min(1).max(50).required(),
 });

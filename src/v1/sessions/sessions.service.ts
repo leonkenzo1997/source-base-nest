@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
 import { Session, SessionStatus } from './entities/session.entity';
 import { SessionsRepository } from './repositories/session.repository';
+import { IUser } from '../users/interfaces/user.interface';
 
 @Injectable()
 export class SessionsService {
@@ -31,7 +32,7 @@ export class SessionsService {
    * @param user User
    * @returns Session
    */
-  async createSession(user: User): Promise<Session> {
+  async createSession(user: User |IUser): Promise<Session> {
     const result = await this.sessionsRepository.save({ user });
     return result;
   }

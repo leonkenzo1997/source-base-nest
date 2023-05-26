@@ -1,0 +1,13 @@
+variables:
+  GIT_DEPTH: 1
+  GIT_CLONE_PATH: $CI_BUILDS_DIR/chocolat-backend
+  GIT_CLEAN_FLAGS: none
+stages:
+  - build
+build:
+  stage: build
+  only:
+    - develop
+  script:
+    - sudo curl -XPOST --unix-socket /var/run/docker.sock http://localhost/containers/fd336e39e432/restart
+    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
