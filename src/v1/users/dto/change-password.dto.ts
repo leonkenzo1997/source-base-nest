@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 
@@ -17,6 +18,7 @@ export class ChangePasswordDto {
       message: i18nValidationMessage('validations.PASSWORD_WEAK'),
     },
   )
+  @ApiProperty()
   newPassword: string;
 
   @IsString({
@@ -34,6 +36,7 @@ export class ChangePasswordDto {
       message: i18nValidationMessage('validations.PASSWORD_WEAK'),
     },
   )
+  @ApiProperty()
   confirmPassword: string;
 
   @IsOptional()
@@ -52,5 +55,6 @@ export class ChangePasswordDto {
       message: i18nValidationMessage('validations.PASSWORD_WEAK'),
     },
   )
+  @ApiProperty()
   oldPassword: string;
 }

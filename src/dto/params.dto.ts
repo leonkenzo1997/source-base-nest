@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -18,6 +19,7 @@ export class AttachIdDto {
   //   },
   // )
   @IsNotEmpty({ message: i18nValidationMessage('validations.NOT_EMPTY') })
+  @ApiProperty()
   id: number;
 }
 
@@ -29,6 +31,7 @@ export class AttachUserIdDto {
     },
   )
   @IsNotEmpty({ message: i18nValidationMessage('validations.NOT_EMPTY') })
+  @ApiProperty()
   userId: number;
 }
 
@@ -39,6 +42,7 @@ export class AttachBuildingIdDto {
       message: i18nValidationMessage('validations.INVALID_NUMBER'),
     },
   )
+  @ApiProperty()
   buildingId: number;
 }
 
@@ -49,6 +53,7 @@ export class AttachFloorIdDto {
       message: i18nValidationMessage('validations.INVALID_NUMBER'),
     },
   )
+  @ApiProperty()
   floorId: number;
 }
 
@@ -59,6 +64,7 @@ export class AttachZoneIdDto {
       message: i18nValidationMessage('validations.INVALID_NUMBER'),
     },
   )
+  @ApiProperty()
   zoneId: number;
 }
 
@@ -69,6 +75,7 @@ export class AttachGroupIdDto {
       message: i18nValidationMessage('validations.INVALID_NUMBER'),
     },
   )
+  @ApiProperty()
   groupId: number;
 }
 
@@ -79,6 +86,7 @@ export class AttachSceneIdDto {
       message: i18nValidationMessage('validations.INVALID_NUMBER'),
     },
   )
+  @ApiProperty()
   sceneId: number;
 }
 
@@ -89,6 +97,7 @@ export class AttachDeviceTypeIdDto {
       message: i18nValidationMessage('validations.INVALID_NUMBER'),
     },
   )
+  @ApiProperty()
   deviceType: number;
 }
 
@@ -99,10 +108,12 @@ export class AttachDeviceIdDto {
       message: i18nValidationMessage('validations.INVALID_NUMBER'),
     },
   )
+  @ApiProperty()
   deviceId: number;
 }
 
 export class AttachAddressDto {
+  @ApiProperty()
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   address: string;
 }

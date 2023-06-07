@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsString,
@@ -20,6 +21,7 @@ export class CreateSuperAdminDto {
   @MaxLength(255, {
     message: i18nValidationMessage('validations.MAX_LENGTH_255'),
   })
+  @ApiProperty()
   email: string;
 
   @IsString({
@@ -37,5 +39,6 @@ export class CreateSuperAdminDto {
       message: i18nValidationMessage('validations.PASSWORD_WEAK'),
     },
   )
+  @ApiProperty()
   password: string;
 }

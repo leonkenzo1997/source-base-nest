@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNumber,
@@ -10,12 +11,14 @@ import {
 import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class UpdateProfileAccountDto {
+  @ApiProperty()
   @IsOptional()
   @IsString({
     message: i18nValidationMessage('validations.INVALID_STRING'),
   })
   fullName: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString({
     message: i18nValidationMessage('validations.INVALID_STRING'),
@@ -31,6 +34,7 @@ export class UpdateProfileAccountDto {
   })
   emailContact: string;
 
+  @ApiProperty()
   @IsNumberString({
     message: i18nValidationMessage(
       'validations.PHONE_NUMBER_TYPE_NUMBER_STRING',

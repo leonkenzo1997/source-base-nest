@@ -1,4 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray, IsDate,
@@ -19,6 +20,7 @@ import { i18nValidationMessage } from 'nestjs-i18n';
 // import { AttachGroupIdDto, AttachZoneIdDto } from './params.dto';
 
 export class AttachNameDto {
+  @ApiProperty()
   @IsString({
     message: i18nValidationMessage('validations.INVALID_STRING'),
   })
@@ -35,6 +37,7 @@ export class AttachNameDto {
 // }
 
 export class RequestEncryptDto {
+  @ApiProperty()
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   @IsEmail(
     {},
@@ -47,6 +50,7 @@ export class RequestEncryptDto {
   })
   email: string;
 
+  @ApiProperty()
   @MinLength(8, {
     message: i18nValidationMessage('validations.MIN_PASSWORD'),
   })
@@ -61,16 +65,19 @@ export class RequestEncryptDto {
   )
   password: string;
 
+  @ApiProperty()
   @IsDate({ message: i18nValidationMessage('validations.INVALID_DATE') })
   requestTime: Date;
 }
 
 export class PageAndLimitDto {
+  @ApiProperty()
   @IsInt()
   @IsOptional()
   @Min(1)
   page?: number = 1;
 
+  @ApiProperty()
   @IsInt()
   @IsOptional()
   @Min(1)
@@ -79,6 +86,7 @@ export class PageAndLimitDto {
 }
 
 export class DataEncryptDto {
+  @ApiProperty()
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   dataEncrypt: string;
 }

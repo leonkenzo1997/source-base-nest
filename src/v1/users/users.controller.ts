@@ -3,7 +3,6 @@ import {
   ISuccessResponse,
 } from '../../interfaces/response.interface';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { CreateUserDto } from './dto/create-user.dto';
 
 import {
   Body,
@@ -13,14 +12,12 @@ import {
   Param,
   Post,
   Put,
-  Query,
   Request,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { IRequest } from '../../interfaces/request.interface';
 import { ResponseService } from '../../utils/response.service';
-import { AuthRoles } from '../roles/decorator/roles.decorator';
-import { AuthRules } from '../rules/decorator/rules.decorator';
-import { UserRule } from '../rules/rule.const';
+import { AuthRoles } from '../roles/decorator/authRoles.decorator';
 import { CreateSuperAdminDto } from './dto/create-super-admin.dto';
 import { DeleteMultipleAccountDto } from './dto/delete-multiple-account.dto';
 import { ParamUserDetailDto } from './dto/param-user.dto';
@@ -28,6 +25,7 @@ import { UpdateProfileAccountDto } from './dto/update-profile-account.dto';
 import { UserRole } from './user.const';
 import { UsersService } from './users.service';
 
+@ApiTags('Users')
 @Controller()
 // @AuthRules(UserRule.UserManagement)
 export class UsersController {

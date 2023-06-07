@@ -1,6 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
+import {
+  DocumentBuilder,
+  SwaggerModule
+} from '@nestjs/swagger';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { AppModule } from './app.module';
 import { JwtAuthGuard } from './v1/authentication/guard/jwt-authentication.guard';
@@ -44,8 +48,29 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept',
     credentials: true,
   });
-  // app.useGlobalFilters(new I18nValidationExceptionFilter());
   app.setGlobalPrefix('api');
+
+  // set up swagger
+  const config = new DocumentBuilder()
+    .setTitle('Source-base')
+    .setDescription('The source base API description')
+    .setVersion('1.0')
+    .addBearerAuth(
+      {
+        description: 'Please enter token',
+        name: 'Authorization',
+        bearerFormat: 'Bearer',
+        scheme: 'Bearer',
+        type: 'http',
+        in: 'Header',
+      },
+      'accessToken',
+    )
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
+
+  // app.useGlobalFilters(new I18nValidationExceptionFilter());
   // app.useGlobalInterceptors(new TransformInterceptor());
   await app.listen(port);
 }

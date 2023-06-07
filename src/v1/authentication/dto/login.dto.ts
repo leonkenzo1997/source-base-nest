@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsEmail,
@@ -10,6 +11,7 @@ import {
 import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class LoginDto {
+  @ApiProperty()
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   @IsEmail(
     {},
@@ -22,9 +24,11 @@ export class LoginDto {
   })
   email: string;
 
+  @ApiProperty()
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   password: string;
 
+  @ApiProperty()
   @IsBoolean({
     message: i18nValidationMessage('validations.TYPE_BOOLEAN'),
   })

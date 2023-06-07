@@ -9,7 +9,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { ResponseService } from 'src/utils/response.service';
-import { AuthRoles } from '../roles/decorator/roles.decorator';
 import { UserRole } from '../users/user.const';
 import {
   IErrorResponse,
@@ -19,7 +18,10 @@ import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
 import { RulesService } from './rules.service';
 import { GetRuleDto } from './dto/get-rule.dto';
+import { AuthRoles } from '../roles/decorator/authRoles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Rules')
 @Controller()
 export class RulesController {
   constructor(

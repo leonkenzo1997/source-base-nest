@@ -1,8 +1,10 @@
 import { IsIn, IsNumber } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { UserRule } from '../rule.const';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class AttachRuleDto {
+  @ApiProperty()
   @IsNumber(
     {},
     {

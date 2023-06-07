@@ -15,6 +15,8 @@ import {
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { AttachRuleDto } from '../../rules/dto/attach-rule.dto';
 import { UserRole } from '../user.const';
+import { ApiProperty } from '@nestjs/swagger';
+
 
 export class CreateUserDto {
   @IsString({
@@ -29,6 +31,7 @@ export class CreateUserDto {
   @MaxLength(320, {
     message: i18nValidationMessage('validations.MAX_LENGTH_320'),
   })
+  @ApiProperty()
   email: string;
 
   @IsString({
@@ -46,6 +49,7 @@ export class CreateUserDto {
       message: i18nValidationMessage('validations.PASSWORD_WEAK'),
     },
   )
+  @ApiProperty()
   password: string;
 
   // @IsOptional()

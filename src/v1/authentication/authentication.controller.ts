@@ -6,16 +6,18 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ResponseService } from '../../utils/response.service';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { IRequest } from '../../interfaces/request.interface';
 import {
   IErrorResponse,
   ISuccessResponse,
 } from '../../interfaces/response.interface';
+import { ResponseService } from '../../utils/response.service';
 import { AuthenticationService } from './authentication.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtRefreshTokenGuard } from './guard/jwt-refresh.guard';
 
+@ApiTags('Authentication')
 @Controller()
 export class AuthenticationController {
   constructor(
@@ -60,6 +62,8 @@ export class AuthenticationController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @Post('user-login')
+  @ApiBody({ description: 'This API account user login', type: [LoginDto] })
+  // @ApiOperation({ description: "This API account user login" })
   async userLogin(
     @Body() loginDto: LoginDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
