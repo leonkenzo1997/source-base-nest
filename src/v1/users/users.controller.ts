@@ -14,13 +14,13 @@ import {
   Put,
   Request,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { IRequest } from '../../interfaces/request.interface';
 import { ResponseService } from '../../utils/response.service';
 import { AuthRoles } from '../roles/decorator/authRoles.decorator';
 import { CreateSuperAdminDto } from './dto/create-super-admin.dto';
 import { DeleteMultipleAccountDto } from './dto/delete-multiple-account.dto';
-import { ParamUserDetailDto } from './dto/param-user.dto';
+import { CheckEmailDto, ParamUserDetailDto } from './dto/param-user.dto';
 import { UpdateProfileAccountDto } from './dto/update-profile-account.dto';
 import { UserRole } from './user.const';
 import { UsersService } from './users.service';
@@ -41,6 +41,7 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @Post('register/super-admin')
+  @ApiOperation({ description: 'This API register acount super-admin' })
   async createSuperAdmin(
     @Body() createSuperAdminDto: CreateSuperAdminDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
@@ -48,10 +49,17 @@ export class UsersController {
     return this.res.success(data, 'SUCCESS');
   }
 
+  /**
+   * This method api register account admin
+   *
+   * @body createSuperAdminDto CreateSuperAdminDto
+   * @returns ISuccessResponse | IErrorResponse
+   */
   // api register account admin
   @AuthRoles(UserRole.SuperAdmin)
   // @AuthRules(UserRule.UserManagement)
   @Post('register/admin')
+  @ApiOperation({ description: 'This API register acount admin' })
   async createAdmin(
     @Body() createAdminDto: CreateSuperAdminDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
@@ -68,9 +76,11 @@ export class UsersController {
   @AuthRoles(UserRole.SuperAdmin)
   // @AuthRules(UserRule.UserManagement)
   @Post('check-email')
+  @ApiOperation({ description: 'This API check email register' })
   async checkEmailExist(
-    @Body('email') email: string,
+    @Body() checkEmailDto: CheckEmailDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
+    let email = checkEmailDto.email;
     const data = await this.usersService.checkEmailExist(email);
     return this.res.success({}, 'SUCCESS');
   }
@@ -84,9 +94,10 @@ export class UsersController {
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
   // @AuthRules(UserRule.UserManagement)
   @Get(':id')
+  @ApiOperation({ description: 'This API get detail user' })
+  @ApiParam({ name: 'id', description: 'id of user' })
   async getDetailUsers(
     @Param() params: ParamUserDetailDto,
-    // @Param('id') id: number
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = params.id;
     let data = await this.usersService.getDetailUsers(id);

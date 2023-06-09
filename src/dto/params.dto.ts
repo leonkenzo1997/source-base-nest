@@ -1,13 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import {
-  IsArray,
   IsNotEmpty,
   IsNumber,
-  IsOptional,
-  IsString,
-  MaxLength,
-  ValidateNested,
+  IsString
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 
@@ -19,7 +14,9 @@ export class AttachIdDto {
   //   },
   // )
   @IsNotEmpty({ message: i18nValidationMessage('validations.NOT_EMPTY') })
-  @ApiProperty()
+  @ApiProperty({
+    required: true,
+  })
   id: number;
 }
 
@@ -117,5 +114,3 @@ export class AttachAddressDto {
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   address: string;
 }
-
-

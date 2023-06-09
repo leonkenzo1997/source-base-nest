@@ -11,7 +11,10 @@ import {
 import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class LoginDto {
-  @ApiProperty()
+  @ApiProperty({
+    example: 'name@gmail.com',
+    format: 'email'
+  })
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   @IsEmail(
     {},
@@ -24,11 +27,15 @@ export class LoginDto {
   })
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'password is string'
+  })
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    default: false
+  })
   @IsBoolean({
     message: i18nValidationMessage('validations.TYPE_BOOLEAN'),
   })

@@ -21,7 +21,10 @@ export class CreateSuperAdminDto {
   @MaxLength(255, {
     message: i18nValidationMessage('validations.MAX_LENGTH_255'),
   })
-  @ApiProperty()
+  @ApiProperty({
+    example: 'name@gmail.com',
+    format: 'email'
+  })
   email: string;
 
   @IsString({

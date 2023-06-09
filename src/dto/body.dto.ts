@@ -1,21 +1,17 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import {
-  IsArray, IsDate,
+  IsDate,
   IsEmail,
   IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   Matches,
   Max,
   MaxLength,
   Min,
-  MinLength,
-  ValidateNested
-} from "class-validator";
+  MinLength
+} from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 // import { AttachGroupIdDto, AttachZoneIdDto } from './params.dto';
 
@@ -37,7 +33,9 @@ export class AttachNameDto {
 // }
 
 export class RequestEncryptDto {
-  @ApiProperty()
+  @ApiProperty({
+    example: 'name@gmail.com'
+  })
   @IsString({ message: i18nValidationMessage('validations.INVALID_STRING') })
   @IsEmail(
     {},

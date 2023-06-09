@@ -17,6 +17,16 @@ export class DeleteMultipleAccountDto {
     message: i18nValidationMessage('validations.MIN_ARRAY'),
   })
   @Type(() => AttachIdDto)
-  @ApiProperty()
+  @ApiProperty({
+    example: [
+      {
+        id: 1,
+      },
+      {
+        id: 2,
+      },
+    ],
+    type: AttachIdDto,
+  })
   usersArray: AttachIdDto[];
 }
