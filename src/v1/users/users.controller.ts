@@ -1,7 +1,7 @@
 import {
   IErrorResponse,
   ISuccessResponse,
-} from '../../interfaces/response.interface';
+} from '../../utils/interfaces/response.interface';
 import { ChangePasswordDto } from './dto/change-password.dto';
 
 import {
@@ -14,8 +14,16 @@ import {
   Put,
   Request,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { IRequest } from '../../interfaces/request.interface';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ResponseDto, ResponseGetDto } from '../../utils/dto/response.dto';
+import { IRequest } from '../../utils/interfaces/request.interface';
 import { ResponseService } from '../../utils/response.service';
 import { AuthRoles } from '../roles/decorator/authRoles.decorator';
 import { CreateSuperAdminDto } from './dto/create-super-admin.dto';
@@ -24,15 +32,16 @@ import { CheckEmailDto, ParamUserDetailDto } from './dto/param-user.dto';
 import { UpdateProfileAccountDto } from './dto/update-profile-account.dto';
 import { UserRole } from './user.const';
 import { UsersService } from './users.service';
+import { BaseController } from '../../base/base-controller';
 
 @ApiTags('Users')
-@Controller()
-// @AuthRules(UserRule.UserManagement)
-export class UsersController {
+export class UsersController extends BaseController{
   constructor(
     private readonly usersService: UsersService,
-    private res: ResponseService,
-  ) {}
+    private _res: ResponseService,
+  ) {
+    super(usersService)
+  }
 
   /**
    * This method api register account super admin
@@ -41,12 +50,13 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @Post('register/super-admin')
-  @ApiOperation({ description: 'This API register acount super-admin' })
+  @ApiOperation({ summary: 'This API register acount super-admin', description: 'This API register acount super-admin' })
+  @ApiBody({ type: CreateSuperAdminDto })
   async createSuperAdmin(
     @Body() createSuperAdminDto: CreateSuperAdminDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
     const data = await this.usersService.createSuperAdmin(createSuperAdminDto);
-    return this.res.success(data, 'SUCCESS');
+    return this._res.success(data, 'SUCCESS');
   }
 
   /**
@@ -60,11 +70,12 @@ export class UsersController {
   // @AuthRules(UserRule.UserManagement)
   @Post('register/admin')
   @ApiOperation({ description: 'This API register acount admin' })
+  @ApiBody({ type: CreateSuperAdminDto })
   async createAdmin(
     @Body() createAdminDto: CreateSuperAdminDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
     const data = await this.usersService.createAdmin(createAdminDto);
-    return this.res.success(data);
+    return this._res.success(data);
   }
 
   /**
@@ -77,12 +88,13 @@ export class UsersController {
   // @AuthRules(UserRule.UserManagement)
   @Post('check-email')
   @ApiOperation({ description: 'This API check email register' })
+  @ApiBody({ type: CheckEmailDto })
   async checkEmailExist(
     @Body() checkEmailDto: CheckEmailDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
     let email = checkEmailDto.email;
     const data = await this.usersService.checkEmailExist(email);
-    return this.res.success({}, 'SUCCESS');
+    return this._res.success({}, 'SUCCESS');
   }
 
   /**
@@ -92,6 +104,11 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+    type: ResponseGetDto,
+  })
   // @AuthRules(UserRule.UserManagement)
   @Get(':id')
   @ApiOperation({ description: 'This API get detail user' })
@@ -101,7 +118,7 @@ export class UsersController {
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = params.id;
     let data = await this.usersService.getDetailUsers(id);
-    return this.res.success(data, 'SUCCESS');
+    return this._res.success(data, 'SUCCESS');
   }
 
   /**
@@ -112,12 +129,14 @@ export class UsersController {
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin, UserRole.User)
   @Get()
+  @ApiOperation({ description: 'This API get profile user' })
+  @ApiQuery({ name: 'id', description: 'id of user' })
   async getProfileAccount(
     @Request() req: IRequest,
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = req.user.userId;
     let data = await this.usersService.getDetailUsers(id);
-    return this.res.success(data, 'SUCCESS');
+    return this._res.success(data, 'SUCCESS');
   }
 
   /**
@@ -138,7 +157,7 @@ export class UsersController {
       id,
       changePasswordDto,
     );
-    return this.res.success(data, 'CHANGE_PASSWORD_SUCCESS');
+    return this._res.success(data, 'CHANGE_PASSWORD_SUCCESS');
   }
 
   /**
@@ -159,7 +178,7 @@ export class UsersController {
       id,
       changePasswordDto,
     );
-    return this.res.success(data, 'CHANGE_PASSWORD_SUCCESS');
+    return this._res.success(data, 'CHANGE_PASSWORD_SUCCESS');
   }
 
   /**
@@ -181,7 +200,7 @@ export class UsersController {
       id,
       updateProfileAccountDto,
     );
-    return this.res.success(data, 'SUCCESS');
+    return this._res.success(data, 'SUCCESS');
   }
 
   /**
@@ -199,7 +218,7 @@ export class UsersController {
     let data = await this.usersService.deleteMultipleAccount(
       deleteMultipleAccountDto,
     );
-    return this.res.success(data, 'SUCCESS');
+    return this._res.success(data, 'SUCCESS');
   }
 
   /**
@@ -215,7 +234,7 @@ export class UsersController {
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = params.id;
     let data = await this.usersService.deleteAccount(id);
-    return this.res.success(data, 'SUCCESS');
+    return this._res.success(data, 'SUCCESS');
   }
 
   /**
@@ -225,13 +244,12 @@ export class UsersController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @AuthRoles(UserRole.SuperAdmin, UserRole.Admin)
-  // @AuthRules(UserRule.UserManagement)
   @Put('/:id')
   async recoverAccount(
     @Param() params: ParamUserDetailDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = params.id;
     let data = await this.usersService.recoverAccount(id);
-    return this.res.success(data, 'SUCCESS');
+    return this._res.success(data, 'SUCCESS');
   }
 }

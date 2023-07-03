@@ -8,18 +8,19 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { AttachIdDto } from 'src/dto/params.dto';
-import { ResponseService } from 'src/utils/response.service';
+
+import { AttachIdDto } from '../../utils/dto/params.dto';
 import { AuthRoles } from '../roles/decorator/authRoles.decorator';
 import { UserRole } from '../users/user.const';
 import {
   IErrorResponse,
   ISuccessResponse,
-} from './../../interfaces/response.interface';
+} from '../../utils/interfaces/response.interface';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { GetRuleDto } from './dto/get-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
 import { RulesService } from './rules.service';
+import { ResponseService } from '../../utils/response.service';
 
 @ApiTags('Rules')
 @Controller()
@@ -42,7 +43,7 @@ export class RulesController {
   async createRule(
     @Body() createRuleDto: CreateRuleDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
-    let data = await this.rulesService.create(createRuleDto);
+    const data = await this.rulesService.create(createRuleDto);
     return this.res.success(data);
   }
 
@@ -75,8 +76,8 @@ export class RulesController {
   async getDetail(
     @Param() params: AttachIdDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
-    let id = params.id;
-    let data = await this.rulesService.getDetail(id);
+    const id = params.id;
+    const data = await this.rulesService.getDetail(id);
     return this.res.success(data);
   }
 
@@ -95,8 +96,8 @@ export class RulesController {
     @Param() params: AttachIdDto,
     @Body() updateRuleDto: UpdateRuleDto,
   ) {
-    let id: number = params.id;
-    let data = await this.rulesService.updateRule(id, updateRuleDto);
+    const id: number = params.id;
+    const data = await this.rulesService.updateRule(id, updateRuleDto);
     return this.res.success(data);
   }
 }

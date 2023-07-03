@@ -8,15 +8,15 @@ import {
 } from '@nestjs/common';
 import { In } from 'typeorm';
 import { BaseService } from '../../base/base.service';
-import { ErrorSuccess } from '../../interfaces/error-succes.interface';
+import { IResponseErrorSuccess } from '../../utils/interfaces/response.interface';
 import { PaginationService } from '../../utils/pagination.service';
 import { PasswordService } from '../../utils/password.service';
-import { CreateUserDto } from './dto/create-user.dto';
-
 import { Rule } from '../rules/entities/rule.entity';
 import { RulesService } from '../rules/rules.service';
+import { MESSAGE_CODE } from './../../messages/message.response';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { CreateSuperAdminDto } from './dto/create-super-admin.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteMultipleAccountDto } from './dto/delete-multiple-account.dto';
 import { UpdateProfileAccountDto } from './dto/update-profile-account.dto';
 import { User } from './entities/user.entity';
@@ -25,7 +25,7 @@ import { UsersRepository } from './repositories/users.repository';
 import { USER_RELATION, USER_SELECT, UserRole } from './user.const';
 
 @Injectable()
-export class UsersService extends BaseService<User, UsersRepository> {
+export class UsersService extends BaseService<User> {
   constructor(
     private usersRepository: UsersRepository,
     private passwordService: PasswordService,
@@ -243,6 +243,7 @@ export class UsersService extends BaseService<User, UsersRepository> {
    * @param id number
    * @returns IUser
    */
+  // async getDetailUsers({id}:{id: number}): Promise<IUser> {   // declare type object for function
   async getDetailUsers(id: number): Promise<IUser> {
     const where = { id };
     let relations = {
@@ -254,8 +255,10 @@ export class UsersService extends BaseService<User, UsersRepository> {
       rules: { rule: { id: true, name: true }, id: true },
     };
     let user = await this.usersRepository.findOne(where, relations, select);
+
     if (!user) {
-      throw new HttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND);
+      // throw new HttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND);
+      throw new HttpException(MESSAGE_CODE.NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     let result = await this.handleDataUser(user);
@@ -310,7 +313,7 @@ export class UsersService extends BaseService<User, UsersRepository> {
   async changePasswordProfile(
     id: number,
     changePasswordDto: ChangePasswordDto,
-  ): Promise<User | ErrorSuccess> {
+  ): Promise<User | IResponseErrorSuccess> {
     //Find User
     let userData: any = await this.findById(id);
 

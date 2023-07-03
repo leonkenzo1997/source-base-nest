@@ -118,5 +118,6 @@
   "DEVICE_NOT_EXIST_IN_FLOOR": "The gateway device does not exist on the floor",
   "FLOOR_NOT_MATCH_FLOOR_OF_DEVICE": "The floor id does not match the floor of the device!!!",
   "WRONG_AUTHENTICATION": "Authentication information does not match.",
-  "TIME_OUT": "Request time out"
+  "TIME_OUT": "Request time out",
+  "9999": "test"
 }

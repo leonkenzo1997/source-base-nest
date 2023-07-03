@@ -61,6 +61,9 @@ export class RequestEncryptDto {
       message: i18nValidationMessage('validations.PASSWORD_WEAK'),
     },
   )
+  @IsNotEmpty({
+    message: i18nValidationMessage('validations.PASSWORD_NOT_EMPTY'),
+  })
   password: string;
 
   @ApiProperty()

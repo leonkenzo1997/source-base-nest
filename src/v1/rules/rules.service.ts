@@ -6,7 +6,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Like } from 'typeorm';
-import { IPagination } from '../../interfaces/pagination.interface';
+import { IPagination } from '../../utils/interfaces/pagination.interface';
 import { PaginationService } from '../../utils/pagination.service';
 import { RoleName } from '../roles/roles.const';
 import { UsersRulesService } from '../users-rules/users-rules.service';

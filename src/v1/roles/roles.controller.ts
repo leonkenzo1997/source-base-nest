@@ -8,26 +8,29 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { AttachIdDto } from 'src/dto/params.dto';
+import { AttachIdDto } from '../../utils/dto/params.dto';
 import { UserRole } from '../users/user.const';
 import {
   IErrorResponse,
   ISuccessResponse,
-} from './../../interfaces/response.interface';
+} from '../../utils/interfaces/response.interface';
 import { ResponseService } from './../../utils/response.service';
 import { AuthRoles } from './decorator/authRoles.decorator';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { GetRoleDto } from './dto/get-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RolesService } from './roles.service';
+import { BaseController } from '../../base/base-controller';
 
 @ApiTags('Roles')
 @Controller()
 export class RolesController {
   constructor(
-    private rolesService: RolesService,
-    private res: ResponseService,
-  ) {}
+    private _rolesService: RolesService,
+    private _res: ResponseService,
+  ) {
+    // super(_rolesService)
+  }
 
   /**
    * This API account create role
@@ -42,8 +45,8 @@ export class RolesController {
   async createRole(
     @Body() createRoleDto: CreateRoleDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
-    const results = await this.rolesService.createRoles(createRoleDto);
-    return this.res.success(results);
+    const results = await this._rolesService.createRoles(createRoleDto);
+    return this._res.success(results);
   }
 
   /**
@@ -69,8 +72,8 @@ export class RolesController {
     // @Param('name') name: string,
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = params.id;
-    const results = await this.rolesService.getDetail(id);
-    return this.res.success(results);
+    const results = await this._rolesService.getDetail(id);
+    return this._res.success(results);
   }
 
   /**
@@ -98,8 +101,8 @@ export class RolesController {
   async getList(
     @Query() getRoleDto: GetRoleDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
-    const results = await this.rolesService.getList(getRoleDto);
-    return this.res.success(results);
+    const results = await this._rolesService.getList(getRoleDto);
+    return this._res.success(results);
   }
 
    /**
@@ -118,7 +121,7 @@ export class RolesController {
     @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<ISuccessResponse | IErrorResponse> {
     let id = params.id;
-    const results = await this.rolesService.updateRole(id, updateRoleDto);
-    return this.res.success(results);
+    const results = await this._rolesService.updateRole(id, updateRoleDto);
+    return this._res.success(results);
   }
 }

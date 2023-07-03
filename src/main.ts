@@ -1,10 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
-import {
-  DocumentBuilder,
-  SwaggerModule
-} from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { AppModule } from './app.module';
 import { JwtAuthGuard } from './v1/authentication/guard/jwt-authentication.guard';
@@ -57,7 +54,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth(
       {
-        description: 'Please enter token',
+        description: 'Please enter access token',
         name: 'Authorization',
         bearerFormat: 'Bearer',
         scheme: 'Bearer',
@@ -65,6 +62,17 @@ async function bootstrap() {
         in: 'Header',
       },
       'accessToken',
+    )
+    .addBearerAuth(
+      {
+        description: 'Please enter refresh token',
+        name: 'Authorization',
+        bearerFormat: 'Bearer',
+        scheme: 'Bearer',
+        type: 'http',
+        in: 'Header',
+      },
+      'refreshToken',
     )
     .build();
   const document = SwaggerModule.createDocument(app, config);

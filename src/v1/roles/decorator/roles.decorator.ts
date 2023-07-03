@@ -2,7 +2,7 @@ import { SetMetadata } from '@nestjs/common';
 import { UserRole } from '../../users/user.const';
 
 export const Roles = (...roles: UserRole[]) => {
-  return SetMetadata('roles', roles);
+return SetMetadata('roles', roles);
 };
 
 // export function Auth(role?: UserRole | UserRole[]) {

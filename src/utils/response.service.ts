@@ -1,7 +1,7 @@
 import {
   IErrorResponse,
   ISuccessResponse,
-} from './../interfaces/response.interface';
+} from './interfaces/response.interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

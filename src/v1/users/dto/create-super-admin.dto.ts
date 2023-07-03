@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsNotEmpty,
   IsString,
   Matches,
   MaxLength,
@@ -42,6 +43,9 @@ export class CreateSuperAdminDto {
       message: i18nValidationMessage('validations.PASSWORD_WEAK'),
     },
   )
+  @IsNotEmpty({
+    message: i18nValidationMessage('validations.PASSWORD_NOT_EMPTY'),
+  })
   @ApiProperty()
   password: string;
 }

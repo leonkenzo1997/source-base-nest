@@ -1,7 +1,13 @@
-import { HttpException, HttpStatus, Inject, Injectable, forwardRef } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  forwardRef,
+} from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import { ErrorSuccess } from '../../interfaces/error-succes.interface';
-import { IToken } from '../../interfaces/generate-token.interface';
+import { IToken } from '../../utils/interfaces/generate-token.interface';
+import { IResponseErrorSuccess } from '../../utils/interfaces/response.interface';
 import { PasswordService } from '../../utils/password.service';
 import { ResponseService } from '../../utils/response.service';
 import { TokenService } from '../../utils/token.service';
@@ -49,7 +55,7 @@ export class AuthenticationService {
    * @param loginDto LoginDto
    * @returns Login | ErrorSuccess
    */
-  async userLogin(loginDto: LoginDto): Promise<Login | ErrorSuccess> {
+  async userLogin(loginDto: LoginDto): Promise<Login | IResponseErrorSuccess> {
     let msgError: string;
 
     // hanlde isSaved for password and email

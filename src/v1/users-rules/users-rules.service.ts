@@ -3,9 +3,9 @@ import {
   HttpException,
   HttpStatus,
   Inject,
-  Injectable
+  Injectable,
 } from '@nestjs/common';
-import { BaseService } from 'src/base/base.service';
+import { BaseService } from '../../base/base.service';
 import { IUser } from '../users/interfaces/user.interface';
 import { UserRole } from '../users/user.const';
 import { UsersService } from '../users/users.service';
@@ -14,16 +14,13 @@ import { UserRule } from './entities/user-rule.entity';
 import { UsersRulesRepository } from './repositories/rule.repository';
 
 @Injectable()
-export class UsersRulesService extends BaseService<
-  UserRule,
-  UsersRulesRepository
-> {
+export class UsersRulesService extends BaseService<UserRule> {
   constructor(
-    private readonly usersRulesRepository: UsersRulesRepository,
+    private readonly _usersRulesRepository: UsersRulesRepository,
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
   ) {
-    super(usersRulesRepository);
+    super(_usersRulesRepository);
   }
 
   /**
@@ -52,7 +49,7 @@ export class UsersRulesService extends BaseService<
     }
 
     // delete ole rule admin acount
-    await this.usersRulesRepository.softDelete({ user: { id: userId } });
+    await this._usersRulesRepository.softDelete({ user: { id: userId } });
 
     // create new rules admin account
     const rules: any[] = updateUsersRulesDto.rulesIds.map((ruleId) => ({

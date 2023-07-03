@@ -2,10 +2,11 @@ import {
   ArgumentsHost,
   Catch,
   ExceptionFilter,
-  HttpException
+  HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { getI18nContextFromArgumentsHost } from 'nestjs-i18n';
+import { IResponseError } from '../utils/interfaces/response.interface';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -21,6 +22,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     let codeMsg: any[] = [];
     let errors: any[] = exception['errors'];
     let messageError: any[] = [];
+    let statusCode: any;
 
     if (errors?.length > 0) {
       // hanlde error i18n dto
@@ -28,6 +30,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
         errors.map(async (item: any) => {
           let data = await this.handleErrors(i18n, item);
           messageError.push(data);
+          data.codeMsg.map((item: any) => codeMsg.push(item))
+          delete data.codeMsg;
           let children = item.children;
           if (children.length > 0) {
             messageError = await this.checkChildrenField(
@@ -113,42 +117,42 @@ export class HttpExceptionFilter implements ExceptionFilter {
       messages = responseBody?.message ? responseBody.message : responseBody;
       if (!Array.isArray(messages)) {
         if (messages?.toUpperCase() == messages) {
-          codeMsg = messages;
+          statusCode = messages;
           messages = await i18n.t(`languages.${messages}`);
+          codeMsg = messages;
         }
       }
     }
 
+    let bodyError: IResponseError;
     let body: any;
     switch (status) {
       case 200:
       case 201:
         body = {
           errorCode: codeMsg,
-          message: messages,
+          message: Array.isArray(messages) ? messages : [messages],
+          statusCodeMsg: codeMsg,
+          statusCode: statusCode,
         };
+        response.status(status).json(body);
         break;
       default:
-        body = {
+        bodyError = {
           message: Array.isArray(messages) ? messages : [messages],
           statusName:
-            responseBody?.statusName || responseBody?.error || 'Error',
+            responseBody?.statusName ||
+            responseBody?.error ||
+            responseBody ||
+            'Error',
           statusCodeMsg: codeMsg,
+          statusCode: statusCode,
           module: responseBody?.module || request?.route?.path,
           method: request.method || 'Unknown',
         };
+        response.status(status).json(bodyError);
         break;
     }
-
-    // body = {
-    //   message: Array.isArray(messages) ? messages : [messages],
-    //   statusName: responseBody?.statusName || responseBody?.error || 'Error',
-    //   statusCodeMsg: codeMsg,
-    //   module: responseBody?.module || request?.route?.path,
-    //   method: request.method || 'Unknown',
-    // };
-
-    response.status(status).json(body);
   }
 
   async handleErrors(i18n: any, item: any) {
@@ -170,6 +174,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     let data = {
       field: field,
       msg: arrayMessagesDTO,
+      codeMsg: codeMsg,
     };
 
     return data;

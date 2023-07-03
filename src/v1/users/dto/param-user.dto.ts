@@ -1,5 +1,5 @@
 import { PartialType, PickType } from '@nestjs/swagger';
-import { AttachIdDto } from '../../../dto/params.dto';
+import { AttachIdDto } from '../../../utils/dto/params.dto';
 import { CreateSuperAdminDto } from './create-super-admin.dto';
 
 export class ParamUserDetailDto extends PartialType(AttachIdDto) {}

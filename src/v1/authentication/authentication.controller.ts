@@ -6,18 +6,26 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { IRequest } from '../../interfaces/request.interface';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { RequestFormat } from '../../utils/decorator/request.decorator';
+import { ResponseSuccessFormat } from '../../utils/decorator/response-success.decorator';
+import { ResponseFormat } from '../../utils/decorator/response.decorator';
+import { IRequest } from '../../utils/interfaces/request.interface';
 import {
   IErrorResponse,
   ISuccessResponse,
-} from '../../interfaces/response.interface';
+} from '../../utils/interfaces/response.interface';
 import { ResponseService } from '../../utils/response.service';
+import { AuthRoles } from '../roles/decorator/authRoles.decorator';
+import { UserRole } from '../users/user.const';
 import { AuthenticationService } from './authentication.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtRefreshTokenGuard } from './guard/jwt-refresh.guard';
 
 @ApiTags('Authentication')
+@RequestFormat()
+@ResponseFormat()
+@ResponseSuccessFormat()
 @Controller()
 export class AuthenticationController {
   constructor(
@@ -32,8 +40,11 @@ export class AuthenticationController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @UseGuards(JwtRefreshTokenGuard)
+  @ApiBearerAuth('refreshToken')
   @Get('admin/access-token')
-  @ApiOperation({ description: 'This API generate new access token by account admin' })
+  @ApiOperation({
+    description: 'This API generate new access token by account admin',
+  })
   async accessTokenAdmin(
     @Request() req: IRequest,
   ): Promise<ISuccessResponse | IErrorResponse> {
@@ -48,8 +59,12 @@ export class AuthenticationController {
    * @returns ISuccessResponse | IErrorResponse
    */
   @UseGuards(JwtRefreshTokenGuard)
+  @ApiBearerAuth('refreshToken')
   @ApiBody({ type: LoginDto })
-  @ApiOperation({ description: 'This API generate new access token by account user' })
+  @ApiOperation({
+    description: 'This API generate new access token by account user',
+  })
+  @AuthRoles(UserRole.SuperAdmin, UserRole.Admin, UserRole.User)
   @Get('user/access-token')
   async accessTokenUser(
     @Request() req: IRequest,

@@ -116,5 +116,6 @@
   "DEVICE_NOT_EXIST_IN_FLOOR": "게이트웨이 장치가 플로어에 존재하지 않습니다.",
   "FLOOR_NOT_MATCH_FLOOR_OF_DEVICE": "층 ID가 장치의 층과 일치하지 않습니다.!!!",
   "WRONG_AUTHENTICATION": "인증 정보가 일치하지 않습니다.",
-  "TIME_OUT": "요청 시간 초과"
+  "TIME_OUT": "요청 시간 초과",
+  "9999": "test"
 }

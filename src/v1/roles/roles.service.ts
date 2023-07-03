@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Like } from 'typeorm';
-import { IPagination } from './../../interfaces/pagination.interface';
+import { IPagination } from '../../utils/interfaces/pagination.interface';
 import { PaginationService } from './../../utils/pagination.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { GetRoleDto } from './dto/get-role.dto';

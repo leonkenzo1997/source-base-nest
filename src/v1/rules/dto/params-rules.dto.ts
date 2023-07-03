@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/swagger';
-import { AttachIdDto, AttachUserIdDto } from '../../../dto/params.dto';
+import { AttachIdDto, AttachUserIdDto } from '../../../utils/dto/params.dto';
 
 export class ParamRuleUserIdDto extends PartialType(AttachUserIdDto) {}
 

@@ -1,5 +1,8 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBearerAuth, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ResponseAuthorizedDto
+} from './../../../utils/dto/response.dto';
 import { UserRole } from './../../users/user.const';
 import { Roles } from './roles.decorator';
 
@@ -10,6 +13,9 @@ export function AuthRoles(...role: UserRole[]) {
   return applyDecorators(
     Roles(...roles),
     ApiBearerAuth('accessToken'),
-    ApiUnauthorizedResponse({ description: 'Unauthorized' }),
+    ApiUnauthorizedResponse({
+      description: 'Unauthorized',
+      type: ResponseAuthorizedDto,
+    }),
   );
 }

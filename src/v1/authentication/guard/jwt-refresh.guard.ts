@@ -1,3 +1,4 @@
+import { ResponseGetDto } from './../../../utils/dto/response.dto';
 import {
   ExecutionContext,
   HttpException,
@@ -5,6 +6,7 @@ import {
   Injectable
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Injectable()
 export class JwtRefreshTokenGuard extends AuthGuard('jwt-refresh') {

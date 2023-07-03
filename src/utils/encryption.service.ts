@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as CryptoJS from 'crypto-js';
-import { IDecryptData } from './../interfaces/decrypt-data.interfaces';
+import { IDecryptData } from './interfaces/decrypt-data.interfaces';
 
 @Injectable()
 export class EncryptService {

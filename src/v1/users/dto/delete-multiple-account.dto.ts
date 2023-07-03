@@ -7,7 +7,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { AttachIdDto } from '../../../dto/params.dto';
+import { AttachIdDto } from '../../../utils/dto/params.dto';
 
 export class DeleteMultipleAccountDto {
   @IsOptional()

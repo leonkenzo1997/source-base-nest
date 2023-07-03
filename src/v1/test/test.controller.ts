@@ -3,7 +3,7 @@ import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { JwtAuthGuard } from '../authentication/guard/jwt-authentication.guard';
 // import { UsersService } from '../users/users.service';
 import { TestService } from './test.service';
-import { IRequest } from '../../interfaces/request.interface';
+import { IRequest } from '../../utils/interfaces/request.interface';
 
 
 @Controller()

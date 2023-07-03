@@ -1,4 +1,4 @@
-import { IPagination } from './../interfaces/pagination.interface';
+import { IPagination } from './interfaces/pagination.interface';
 
 import { Injectable } from '@nestjs/common';
 
